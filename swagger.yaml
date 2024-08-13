@@ -61,7 +61,7 @@ paths:
                   description: Identifiant unique de l'utilisateur.
                   example: "john_doe"
       responses:
-        '201':
+        "201":
           description: Compte utilisateur créé avec succès.
           content:
             application/json:
@@ -74,7 +74,7 @@ paths:
                   status:
                     type: string
                     example: "Valider"
-        '400':
+        "400":
           description: Requête invalide (données manquantes ou incorrectes).
           content:
             application/json:
@@ -84,7 +84,7 @@ paths:
                   message:
                     type: string
                     example: "Les données fournies sont invalides."
-        '409':
+        "409":
           description: Conflit - Nom d'utilisateur ou email déjà utilisé.
           content:
             application/json:
@@ -94,7 +94,7 @@ paths:
                   message:
                     type: string
                     example: "Nom d'utilisateur ou email déjà utilisé."
-        '500':
+        "500":
           description: Erreur interne du serveur.
           content:
             application/json:
@@ -104,24 +104,6 @@ paths:
                   message:
                     type: string
                     example: "Une erreur interne s'est produite."
-
-  /api/v1/tailleur/status:
-    get:
-      summary: Liste les statuts de l'utilisateur connecté
-      description: Récupère les statuts actifs pour le tailleur ou client connecté.
-      tags:
-        - Status
-      security:
-        - bearerAuth: [ ]
-      responses:
-        '200':
-          description: Liste des statuts retournée avec succès
-        '400':
-          description: ID utilisateur invalide
-        '404':
-          description: Compte ou statut non trouvé
-        '500':
-          description: Erreur serveur
 
   /api/v1/client/unlike:
     delete:
@@ -149,7 +131,7 @@ paths:
                   description: État de l'interaction ('like' ou 'dislike').
                   example: "like"
       responses:
-        '200':
+        "200":
           description: Like ou dislike supprimé avec succès.
 
   /api/v1/login:
@@ -179,7 +161,7 @@ paths:
                 - email
                 - password
       responses:
-        '200':
+        "200":
           description: Connexion réussie.
           content:
             application/json:
@@ -195,7 +177,7 @@ paths:
                   message:
                     type: string
                     example: "Connexion réussie"
-        '400':
+        "400":
           description: Requête invalide (état incorrect ou données manquantes).
           content:
             application/json:
@@ -208,7 +190,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '404':
+        "404":
           description: Utilisateur non trouvé.
           content:
             application/json:
@@ -221,7 +203,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
+        "500":
           description: Erreur interne du serveur.
           content:
             application/json:
@@ -240,6 +222,8 @@ paths:
       summary: Rechercher des utilisateurs, des comptes et des posts
       tags:
         - Recherche
+      security:
+        - bearerAuth: []
       requestBody:
         description: Données nécessaires pour effectuer une recherche.
         required: true
@@ -253,7 +237,7 @@ paths:
                   description: Texte à rechercher dans les utilisateurs, comptes et posts.
                   example: "John"
       responses:
-        '200':
+        "200":
           description: Résultats de la recherche retournés avec succès.
           content:
             application/json:
@@ -300,9 +284,9 @@ paths:
                   status:
                     type: string
                     example: "OK"
-        '403':
+        "403":
           description: Compte désactivé.
-        '500':
+        "500":
           description: Erreur lors de la recherche (aucun résultat trouvé ou erreur serveur).
           content:
             application/json:
@@ -322,9 +306,9 @@ paths:
       tags:
         - Utilisateurs
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: Accueil du client affiché avec succès.
           content:
             application/json:
@@ -371,7 +355,7 @@ paths:
                   status:
                     type: string
                     example: "OK"
-        '500':
+        "500":
           description: Erreur lors de l'affichage de l'accueil du client.
           content:
             application/json:
@@ -390,6 +374,8 @@ paths:
       summary: Ajouter une réponse à un commentaire
       tags:
         - Commentaires
+      security:
+        - bearerAuth: []
       requestBody:
         description: Données nécessaires pour ajouter une réponse à un commentaire.
         required: true
@@ -398,20 +384,16 @@ paths:
             schema:
               type: object
               properties:
-                postId:
+                idPost:
                   type: string
                   description: ID du post auquel répondre.
                   example: "66ba2d393914cebca4eb2102"
-                commentId:
-                  type: string
-                  description: ID du commentaire auquel répondre.
-                  example: "66ba2d383914cebca4eb20f6"
                 content:
                   type: string
                   description: Contenu de la réponse.
                   example: "Merci pour votre commentaire !"
       responses:
-        '200':
+        "200":
           description: Réponse ajoutée avec succès.
           content:
             application/json:
@@ -424,7 +406,7 @@ paths:
                   status:
                     type: string
                     example: "OK"
-        '400':
+        "400":
           description: Requête invalide (données manquantes ou incorrectes).
           content:
             application/json:
@@ -437,7 +419,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '404':
+        "404":
           description: Commentaire ou post non trouvé.
           content:
             application/json:
@@ -450,7 +432,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
+        "500":
           description: Erreur interne du serveur.
           content:
             application/json:
@@ -470,7 +452,7 @@ paths:
       tags:
         - Utilisateurs/favorites
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       requestBody:
         description: Données nécessaires pour ajouter un client aux favoris.
         required: true
@@ -479,19 +461,14 @@ paths:
             schema:
               type: object
               properties:
-                compte_id:
-                  type: string
-                  description: Identifiant du client à ajouter aux favoris.
-                  example: "605c72ef7d3b3d001f647a4e"
                 post_id:
                   type: string
                   description: Identifiant du post à ajouter aux favoris.
                   example: "605c72ef7d3b3d001f647a4f"
               required:
-                - compte_id
                 - post_id
       responses:
-        '201':
+        "201":
           description: Favori ajouté avec succès.
           content:
             application/json:
@@ -504,7 +481,7 @@ paths:
                   status:
                     type: string
                     example: "OK"
-        '400':
+        "400":
           description: Erreur de validation des données fournies.
           content:
             application/json:
@@ -517,7 +494,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '404':
+        "404":
           description: Client ou post non trouvé.
           content:
             application/json:
@@ -530,7 +507,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
+        "500":
           description: Erreur interne du serveur.
           content:
             application/json:
@@ -550,7 +527,7 @@ paths:
       tags:
         - Utilisateurs/favorites
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       requestBody:
         description: Données nécessaires pour supprimer un client des favoris.
         required: true
@@ -559,19 +536,14 @@ paths:
             schema:
               type: object
               properties:
-                compte_id:
-                  type: string
-                  description: Identifiant du client à retirer des favoris.
-                  example: "605c72ef7d3b3d001f647a4e"
-                post_id:
+                favorite_id:
                   type: string
                   description: Identifiant du post à retirer des favoris.
                   example: "605c72ef7d3b3d001f647a4f"
               required:
-                - compte_id
-                - post_id
+                - favorite_id
       responses:
-        '200':
+        "200":
           description: Favori supprimé avec succès.
           content:
             application/json:
@@ -584,7 +556,7 @@ paths:
                   status:
                     type: string
                     example: "OK"
-        '400':
+        "400":
           description: Erreur de validation des données fournies.
           content:
             application/json:
@@ -597,7 +569,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '404':
+        "404":
           description: Client ou post non trouvé.
           content:
             application/json:
@@ -610,157 +582,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
-          description: Erreur interne du serveur.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Erreur interne du serveur."
-                  status:
-                    type: string
-                    example: "KO"
-
-  /api/v1/tailleur/posts:
-    get:
-      summary: Liste tous les posts de l'utilisateur connecté
-      description: Récupère les posts du tailleur connecté, ainsi que ceux des tailleurs qu'il suit.
-      tags:
-        - Posts
-      security:
-        - bearerAuth: [ ]
-      responses:
-        '200':
-          description: Liste des posts retournée avec succès.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  posts:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        _id:
-                          type: string
-                          description: Identifiant du post.
-                        title:
-                          type: string
-                          description: Titre du post.
-                        content:
-                          type: string
-                          description: Contenu du post.
-                        createdAt:
-                          type: string
-                          format: date-time
-                          description: Date de création du post.
-                        updatedAt:
-                          type: string
-                          format: date-time
-                          description: Date de la dernière mise à jour du post.
-                  message:
-                    type: string
-                    example: "Liste des posts récupérée avec succès."
-                  status:
-                    type: string
-                    example: "OK"
-        '400':
-          description: ID utilisateur invalide.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "ID utilisateur invalide."
-                  status:
-                    type: string
-                    example: "KO"
-        '404':
-          description: Compte ou post non trouvé.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Compte ou post non trouvé."
-                  status:
-                    type: string
-                    example: "KO"
-        '500':
-          description: Erreur interne du serveur.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Erreur interne du serveur."
-                  status:
-                    type: string
-                    example: "KO"
-    post:
-      summary: Crée un nouveau post
-      description: Permet à un tailleur de créer un nouveau post.
-      tags:
-        - Posts
-      security:
-        - bearerAuth: [ ]
-      requestBody:
-        description: Données nécessaires pour créer un nouveau post.
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                  description: Titre du post.
-                  example: "Nouveau post"
-                content:
-                  type: string
-                  description: Contenu du post.
-                  example: "Voici le contenu de mon nouveau post."
-              required:
-                - title
-                - content
-      responses:
-        '201':
-          description: Post créé avec succès.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Post créé avec succès."
-                  status:
-                    type: string
-                    example: "OK"
-        '400':
-          description: Erreur de validation des données fournies.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Données invalides."
-                  status:
-                    type: string
-                    example: "KO"
-        '500':
+        "500":
           description: Erreur interne du serveur.
           content:
             application/json:
@@ -780,9 +602,9 @@ paths:
       tags:
         - Utilisateurs
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: Notifications du client affichées avec succès.
           content:
             application/json:
@@ -810,7 +632,7 @@ paths:
                   status:
                     type: string
                     example: "OK"
-        '404':
+        "404":
           description: Notifications non trouvées.
           content:
             application/json:
@@ -823,7 +645,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
+        "500":
           description: Erreur lors de l'affichage des notifications.
           content:
             application/json:
@@ -842,6 +664,8 @@ paths:
       summary: Ajouter une réponse à un commentaire
       tags:
         - Commentaires
+      security:
+        - bearerAuth: []
       requestBody:
         description: Données nécessaires pour ajouter une réponse à un commentaire.
         required: true
@@ -850,11 +674,7 @@ paths:
             schema:
               type: object
               properties:
-                postId:
-                  type: string
-                  description: ID du post auquel répondre.
-                  example: "66ba2d393914cebca4eb2102"
-                commentId:
+                idComment:
                   type: string
                   description: ID du commentaire auquel répondre.
                   example: "66ba2d383914cebca4eb20f6"
@@ -863,11 +683,10 @@ paths:
                   description: Contenu de la réponse.
                   example: "Merci pour votre commentaire !"
               required:
-                - postId
-                - commentId
+                - idComment
                 - content
       responses:
-        '200':
+        "200":
           description: Réponse ajoutée avec succès.
           content:
             application/json:
@@ -880,7 +699,7 @@ paths:
                   status:
                     type: string
                     example: "OK"
-        '400':
+        "400":
           description: Requête invalide (données manquantes ou incorrectes).
           content:
             application/json:
@@ -893,7 +712,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '404':
+        "404":
           description: Commentaire ou post non trouvé.
           content:
             application/json:
@@ -906,7 +725,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
+        "500":
           description: Erreur interne du serveur.
           content:
             application/json:
@@ -926,7 +745,7 @@ paths:
       tags:
         - Utilisateurs/signaler
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       requestBody:
         description: Données nécessaires pour signaler un compte.
         required: true
@@ -948,7 +767,7 @@ paths:
                   items:
                     type: string
                   description: Images associées au rapport.
-                  example: [ "image1.jpg", "image2.jpg" ]
+                  example: ["image1.jpg", "image2.jpg"]
                 tissus:
                   type: array
                   items:
@@ -968,7 +787,7 @@ paths:
                   description: Utilisation de crédit.
                   example: true
       responses:
-        '201':
+        "201":
           description: Rapport créé avec succès.
           content:
             application/json:
@@ -981,7 +800,7 @@ paths:
                   status:
                     type: string
                     example: "OK"
-        '400':
+        "400":
           description: Données invalides.
           content:
             application/json:
@@ -994,7 +813,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '404':
+        "404":
           description: Compte ou tailleur non trouvé.
           content:
             application/json:
@@ -1007,7 +826,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
+        "500":
           description: Erreur interne du serveur.
           content:
             application/json:
@@ -1021,6 +840,129 @@ paths:
                     type: string
                     example: "KO"
 
+  /api/v1/tailleur/status:
+    get:
+      summary: "Liste les statuts de l'utilisateur connecté"
+      description: "Récupère les statuts actifs pour le tailleur ou client connecté."
+      tags:
+        - Status
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: "Liste des statuts retournée avec succès"
+        "400":
+          description: "ID utilisateur invalide"
+        "404":
+          description: "Compte ou statut non trouvé"
+        "500":
+          description: "Erreur serveur"
+    post:
+      summary: "Crée un nouveau statut"
+      description: "Permet à un tailleur de créer un nouveau statut."
+      tags:
+        - Status
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: The image file to upload.
+                  example: "example.mp4"
+                description:
+                  type: string
+                  description: "Description du statut"
+                  example: "Model du jour"
+                categories:
+                  type: string
+                  description: "Catégorie du statut"
+                  example: "video"
+      responses:
+        "201":
+          description: "Statut créé avec succès"
+        "500":
+          description: "Erreur serveur"
+
+  /api/v1/tailleur/posts:
+    get:
+      summary: "Liste tous les posts de l'utilisateur connecté"
+      description: "Récupère les posts du tailleur connecté, ainsi que ceux des tailleurs qu'il suit."
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: "Liste des posts retournée avec succès"
+        "400":
+          description: "ID utilisateur invalide"
+        "404":
+          description: "Compte ou post non trouvé"
+        "500":
+          description: "Erreur serveur"
+    post:
+      summary: "Crée un nouveau post"
+      description: "Permet à un tailleur de créer un nouveau post."
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: "Contenu du post"
+                  example: "Ceci est un exemple de post."
+                title:
+                  type: string
+                  description: "Titre du post"
+                  example: "Nouveau design"
+                image:
+                  type: array
+                  items:
+                    type: string
+                  description: "Images associées au post"
+                  example: ["image1.jpg", "image2.jpg"]
+                tissus:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      prixMetre:
+                        type: number
+                        example: 10
+                      nombreMetre:
+                        type: number
+                        example: 5
+                      tissu_id:
+                        type: string
+                        example: "60f7a1f3e4b0a45f7c6df1c8"
+                useCredit:
+                  type: boolean
+                  description: "Utilisation de crédit"
+                  example: true
+      responses:
+        "201":
+          description: "Post créé avec succès"
+        "400":
+          description: "Données invalides"
+        "404":
+          description: "Compte ou tailleur non trouvé"
+        "500":
+          description: "Erreur serveur"
+
   /api/v1/tailleur/{postId}:
     put:
       summary: "Met à jour un post existant"
@@ -1028,7 +970,7 @@ paths:
       tags:
         - Posts
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       parameters:
         - in: path
           name: postId
@@ -1037,7 +979,6 @@ paths:
           required: true
           description: "ID du post à mettre à jour"
       requestBody:
-        description: Données nécessaires pour mettre à jour le post.
         required: true
         content:
           application/json:
@@ -1057,7 +998,7 @@ paths:
                   items:
                     type: string
                   description: "Nouvelles images associées au post"
-                  example: [ "new_image1.jpg", "new_image2.jpg" ]
+                  example: ["new_image1.jpg", "new_image2.jpg"]
                 tissus:
                   type: array
                   items:
@@ -1072,17 +1013,33 @@ paths:
                       tissu_id:
                         type: string
                         example: "60f7a1f3e4b0a45f7c6df1c8"
-              required:
-                - content
-                - title
       responses:
-        '200':
+        "200":
           description: "Post mis à jour avec succès"
-        '400':
+        "400":
           description: "Données invalides"
-        '404':
+        "404":
           description: "Post non trouvé"
-        '500':
+        "500":
+          description: "Erreur serveur"
+    delete:
+      summary: "Supprime un post existant"
+      description: "Permet à un tailleur de supprimer un post existant."
+      tags:
+        - Posts
+      parameters:
+        - in: path
+          name: postId
+          schema:
+            type: string
+          required: true
+          description: "ID du post à supprimer"
+      responses:
+        "200":
+          description: "Post supprimé avec succès"
+        "404":
+          description: "Post non trouvé"
+        "500":
           description: "Erreur serveur"
 
   /api/v1/tailleur/achetercredit:
@@ -1092,28 +1049,30 @@ paths:
       tags:
         - Crédit
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
+
       requestBody:
-        description: Données nécessaires pour acheter du crédit.
         required: true
         content:
           application/json:
             schema:
               type: object
               properties:
-                idCommentResponse:
+                compteId:
                   type: string
-                  description: Identifiant de la réponse à supprimer.
-                  example: "605c72ef1c3e0f001f64762f"
-              required:
-                - idCommentResponse
+                  description: "ID compte"
+                  example: "dffj12233399jdjhdbfbcb"
+                montant:
+                  type: number
+                  description: "Montant de crédit à acheter"
+                  example: 100
       responses:
-        '200':
-          description: "Crédit acheté avec succès."
-        '400':
-          description: "ID invalide ou données manquantes."
-        '500':
-          description: "Erreur lors de l'achat du crédit."
+        "201":
+          description: "Crédit acheté avec succès"
+        "400":
+          description: "Données invalides"
+        "500":
+          description: "Erreur serveur"
 
   /api/v1/client/messages:
     get:
@@ -1121,9 +1080,9 @@ paths:
       tags:
         - Messages/Utilisateur
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: "Liste des messages récupérée avec succès."
           content:
             application/json:
@@ -1149,8 +1108,8 @@ paths:
                           format: date-time
                   status:
                     type: string
-                    example: 'OK'
-        '400':
+                    example: "OK"
+        "400":
           description: "ID du client invalide."
           content:
             application/json:
@@ -1163,7 +1122,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '404':
+        "404":
           description: "Aucun message trouvé."
           content:
             application/json:
@@ -1176,7 +1135,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
+        "500":
           description: "Erreur serveur."
 
   /api/v1/client/measures:
@@ -1185,9 +1144,9 @@ paths:
       tags:
         - Clients
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: "Mesures du client récupérées avec succès."
           content:
             application/json:
@@ -1206,7 +1165,7 @@ paths:
                   status:
                     type: string
                     example: "OK"
-        '400':
+        "400":
           description: "Erreur lors de la récupération des mesures."
           content:
             application/json:
@@ -1219,7 +1178,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
+        "500":
           description: "Erreur interne du serveur."
           content:
             application/json:
@@ -1232,126 +1191,6 @@ paths:
                   status:
                     type: string
                     example: "KO"
-
-  /api/v1/client/note:
-    post:
-      summary: "Ajouter une note à un compte"
-      tags:
-        - Notes
-      requestBody:
-        description: "Données nécessaires pour ajouter une note à un compte."
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                who_note_id:
-                  type: string
-                  description: "Identifiant de l'utilisateur qui ajoute la note."
-                  example: "605c72ef1c3e0f001f64762d"
-                noted_id:
-                  type: string
-                  description: "Identifiant de l'utilisateur qui reçoit la note."
-                  example: "605c72ef1c3e0f001f64762e"
-                rating:
-                  type: integer
-                  description: "Note attribuée, qui doit être un nombre entier."
-                  example: 5
-              required:
-                - who_note_id
-                - noted_id
-                - rating
-      responses:
-        '201':
-          description: "Note ajoutée avec succès."
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Note ajoutée avec succès."
-                  note:
-                    type: object
-                    properties:
-                      who_note_id:
-                        type: string
-                        description: "Identifiant de l'utilisateur qui a ajouté la note."
-                      noted_id:
-                        type: string
-                        description: "Identifiant de l'utilisateur noté."
-                      rating:
-                        type: integer
-                        description: "Note attribuée."
-                      createdAt:
-                        type: string
-                        format: date-time
-                        description: "Date de création de la note."
-                      updatedAt:
-                        type: string
-                        format: date-time
-                        description: "Date de la dernière mise à jour de la note."
-                  status:
-                    type: string
-                    example: "OK"
-        '400':
-          description: "Erreur de validation des données fournies."
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Les champs who_note_id, noted_id et rating sont requis, et rating doit être un nombre."
-                  status:
-                    type: string
-                    example: "KO"
-
-  /api/v1/client/profile:
-    get:
-      summary: "Afficher le profil du client"
-      tags:
-        - Clients
-      security:
-        - bearerAuth: [ ]
-      responses:
-        '200':
-          description: "Profil du client affiché avec succès."
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  profile:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        example: "Jean Dupont"
-                      email:
-                        type: string
-                        example: "jean.dupont@example.com"
-                  status:
-                    type: string
-                    example: "OK"
-        '500':
-          description: "Erreur serveur interne."
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Erreur interne du serveur."
-                  status:
-                    type: string
-                    example: "KO"
-
-  /api/v1/client/mesure:
     post:
       summary: Ajouter une mesure pour un compte
       tags:
@@ -1408,7 +1247,7 @@ paths:
                 - Taille
                 - Cou
       responses:
-        '201':
+        "201":
           description: Mesure ajoutée avec succès.
           content:
             application/json:
@@ -1421,7 +1260,7 @@ paths:
                   status:
                     type: string
                     example: "OK"
-        '400':
+        "400":
           description: Erreur de validation des données fournies.
           content:
             application/json:
@@ -1434,8 +1273,128 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
+        "500":
           description: Erreur interne du serveur.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erreur interne du serveur."
+                  status:
+                    type: string
+                    example: "KO"
+
+  /api/v1/client/note:
+    post:
+      summary: "Ajouter une note à un compte"
+      tags:
+        - Notes
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: "Données nécessaires pour ajouter une note à un compte."
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                who_note_id:
+                  type: string
+                  description: "Identifiant de l'utilisateur qui ajoute la note."
+                  example: "605c72ef1c3e0f001f64762d"
+                noted_id:
+                  type: string
+                  description: "Identifiant de l'utilisateur qui reçoit la note."
+                  example: "605c72ef1c3e0f001f64762e"
+                rating:
+                  type: integer
+                  description: "Note attribuée, qui doit être un nombre entier."
+                  example: 5
+              required:
+                - who_note_id
+                - noted_id
+                - rating
+      responses:
+        "201":
+          description: "Note ajoutée avec succès."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Note ajoutée avec succès."
+                  note:
+                    type: object
+                    properties:
+                      who_note_id:
+                        type: string
+                        description: "Identifiant de l'utilisateur qui a ajouté la note."
+                      noted_id:
+                        type: string
+                        description: "Identifiant de l'utilisateur noté."
+                      rating:
+                        type: integer
+                        description: "Note attribuée."
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: "Date de création de la note."
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: "Date de la dernière mise à jour de la note."
+                  status:
+                    type: string
+                    example: "OK"
+        "400":
+          description: "Erreur de validation des données fournies."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Les champs who_note_id, noted_id et rating sont requis, et rating doit être un nombre."
+                  status:
+                    type: string
+                    example: "KO"
+
+  /api/v1/client/profile:
+    get:
+      summary: "Afficher le profil du client"
+      tags:
+        - Clients
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: "Profil du client affiché avec succès."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  profile:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: "Jean Dupont"
+                      email:
+                        type: string
+                        example: "jean.dupont@example.com"
+                  status:
+                    type: string
+                    example: "OK"
+        "500":
+          description: "Erreur serveur interne."
           content:
             application/json:
               schema:
@@ -1454,7 +1413,7 @@ paths:
       tags:
         - Réactions
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       requestBody:
         description: Données nécessaires pour ajouter un like.
         required: true
@@ -1475,7 +1434,7 @@ paths:
                 - postId
                 - compteId
       responses:
-        '201':
+        "201":
           description: Like ajouté avec succès.
           content:
             application/json:
@@ -1488,7 +1447,7 @@ paths:
                   status:
                     type: string
                     example: "OK"
-        '400':
+        "400":
           description: Données invalides ou like déjà existant.
           content:
             application/json:
@@ -1501,7 +1460,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
+        "500":
           description: Erreur interne du serveur.
           content:
             application/json:
@@ -1521,7 +1480,7 @@ paths:
       tags:
         - Posts
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -1530,7 +1489,7 @@ paths:
             type: string
           description: ID du post à récupérer
       responses:
-        '200':
+        "200":
           description: Post récupéré avec succès.
           content:
             application/json:
@@ -1581,7 +1540,7 @@ paths:
                         type: string
                         format: date-time
                         description: Date de la dernière mise à jour du post.
-        '400':
+        "400":
           description: Requête invalide ou données manquantes.
           content:
             application/json:
@@ -1594,7 +1553,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '404':
+        "404":
           description: Post non trouvé.
           content:
             application/json:
@@ -1607,7 +1566,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
+        "500":
           description: Erreur interne du serveur.
           content:
             application/json:
@@ -1627,7 +1586,7 @@ paths:
       tags:
         - Réactions
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       requestBody:
         description: Données nécessaires pour ajouter un dislike.
         required: true
@@ -1648,7 +1607,7 @@ paths:
                 - postId
                 - compteId
       responses:
-        '201':
+        "201":
           description: Dislike ajouté avec succès.
           content:
             application/json:
@@ -1661,7 +1620,7 @@ paths:
                   status:
                     type: string
                     example: "OK"
-        '400':
+        "400":
           description: Données invalides ou dislike déjà existant.
           content:
             application/json:
@@ -1674,7 +1633,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
+        "500":
           description: Erreur interne du serveur.
           content:
             application/json:
@@ -1694,7 +1653,7 @@ paths:
       tags:
         - Posts
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -1703,7 +1662,7 @@ paths:
             type: string
           description: ID du post à récupérer
       responses:
-        '200':
+        "200":
           description: Post récupéré avec succès.
           content:
             application/json:
@@ -1716,45 +1675,8 @@ paths:
                   status:
                     type: string
                     example: "OK"
-                  post:
-                    type: object
-                    properties:
-                      Epaule:
-                        type: number
-                        format: float
-                      Manche:
-                        type: number
-                        format: float
-                      Longueur:
-                        type: number
-                        format: float
-                      Poitrine:
-                        type: number
-                        format: float
-                      Fesse:
-                        type: number
-                        format: float
-                      Taille:
-                        type: number
-                        format: float
-                      Cou:
-                        type: number
-                        format: float
-                      compte_id:
-                        type: string
-                        description: Identifiant du compte utilisateur.
-                      _id:
-                        type: string
-                        description: Identifiant unique du post.
-                      createdAt:
-                        type: string
-                        format: date-time
-                        description: Date de création du post.
-                      updatedAt:
-                        type: string
-                        format: date-time
-                        description: Date de la dernière mise à jour du post.
-        '400':
+
+        "400":
           description: Requête invalide ou données manquantes.
           content:
             application/json:
@@ -1767,7 +1689,7 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '404':
+        "404":
           description: Post non trouvé.
           content:
             application/json:
@@ -1780,7 +1702,552 @@ paths:
                   status:
                     type: string
                     example: "KO"
-        '500':
+        "500":
+          description: Erreur interne du serveur.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erreur interne du serveur."
+                  status:
+                    type: string
+                    example: "KO"
+
+  /api/v1/client/commandes:
+    post:
+      summary: Créer une nouvelle commande dans l'accueil du client
+      tags:
+        - Clients
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tissuPostId:
+                  type: string
+                  description: Identifiant du post de tissu.
+                clientId:
+                  type: string
+                  description: Identifiant du client.
+              required:
+                - tissuPostId
+                - clientId
+      responses:
+        "201":
+          description: Commande créée avec succès.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Commande créée avec succès."
+                  status:
+                    type: string
+                    example: "OK"
+                  order:
+                    type: object
+                    properties:
+                      tissuPostId:
+                        type: string
+                        description: Identifiant du post de tissu.
+                      clientId:
+                        type: string
+                        description: Identifiant du client.
+                      _id:
+                        type: string
+                        description: Identifiant unique de la commande.
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: Date de création de la commande.
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: Date de la dernière mise à jour de la commande.
+        "400":
+          description: Requête invalide ou données manquantes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Requête invalide. Les données de commande sont manquantes ou incorrectes."
+                  status:
+                    type: string
+                    example: "KO"
+        "404":
+          description: Ressource non trouvée.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Tissu post ou client non trouvé."
+                  status:
+                    type: string
+                    example: "KO"
+        "500":
+          description: Erreur interne du serveur.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erreur interne du serveur."
+                  status:
+                    type: string
+                    example: "KO"
+
+  /api/v1/client/follow:
+    post:
+      summary: Créer un nouveau suivi de compte
+      tags:
+        - Clients
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idFollowedCompte:
+                  type: string
+                  description: Identifiant du compte à suivre.
+              required:
+                - idFollowedCompte
+      responses:
+        "201":
+          description: Suivi créé avec succès.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Suivi créé avec succès."
+                  status:
+                    type: string
+                    example: "OK"
+                  follow:
+                    type: object
+                    properties:
+                      idFollowedCompte:
+                        type: string
+                        description: Identifiant du compte suivi.
+                      _id:
+                        type: string
+                        description: Identifiant unique du suivi.
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: Date de création du suivi.
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: Date de la dernière mise à jour du suivi.
+        "400":
+          description: Requête invalide ou données manquantes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Requête invalide. Les données de suivi sont manquantes ou incorrectes."
+                  status:
+                    type: string
+                    example: "KO"
+        "404":
+          description: Compte non trouvé.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Compte à suivre non trouvé."
+                  status:
+                    type: string
+                    example: "KO"
+        "500":
+          description: Erreur interne du serveur.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erreur interne du serveur."
+                  status:
+                    type: string
+                    example: "KO"
+
+  /api/v1/client/share:
+    post:
+      summary: Partager un post
+      tags:
+        - Shares
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                postId:
+                  type: string
+                  description: Identifiant du post à partager.
+              required:
+                - postId
+      responses:
+        "201":
+          description: Partage créé avec succès.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Partage créé avec succès."
+                  status:
+                    type: string
+                    example: "OK"
+                  share:
+                    type: object
+                    properties:
+                      postId:
+                        type: string
+                        description: Identifiant du post partagé.
+                      _id:
+                        type: string
+                        description: Identifiant unique du partage.
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: Date de création du partage.
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: Date de la dernière mise à jour du partage.
+        "400":
+          description: Requête invalide ou données manquantes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Requête invalide. Les données de partage sont manquantes ou incorrectes."
+                  status:
+                    type: string
+                    example: "KO"
+        "404":
+          description: Post non trouvé.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Post à partager non trouvé."
+                  status:
+                    type: string
+                    example: "KO"
+        "500":
+          description: Erreur interne du serveur.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erreur interne du serveur."
+                  status:
+                    type: string
+                    example: "KO"
+
+  /api/v1/client/view:
+    post:
+      summary: Enregistrer une vue sur un post
+      tags:
+        - Views
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                postId:
+                  type: string
+                  description: Identifiant du post vu par l'utilisateur.
+              required:
+                - postId
+      responses:
+        "201":
+          description: Vue enregistrée avec succès.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Vue enregistrée avec succès."
+                  status:
+                    type: string
+                    example: "OK"
+                  view:
+                    type: object
+                    properties:
+                      postId:
+                        type: string
+                        description: Identifiant du post vu.
+                      _id:
+                        type: string
+                        description: Identifiant unique de la vue.
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: Date de création de la vue.
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: Date de la dernière mise à jour de la vue.
+        "400":
+          description: Requête invalide ou données manquantes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Requête invalide. Les données de vue sont manquantes ou incorrectes."
+                  status:
+                    type: string
+                    example: "KO"
+        "404":
+          description: Post non trouvé.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Post à visualiser non trouvé."
+                  status:
+                    type: string
+                    example: "KO"
+        "500":
+          description: Erreur interne du serveur.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erreur interne du serveur."
+                  status:
+                    type: string
+                    example: "KO"
+
+  /api/v1/client/bloquer:
+    post:
+      summary: Bloquer un utilisateur
+      tags:
+        - Tailleur
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userIdToBlock:
+                  type: string
+                  description: Identifiant de l'utilisateur à bloquer.
+              required:
+                - userIdToBlock
+      responses:
+        "201":
+          description: Utilisateur bloqué avec succès.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Utilisateur bloqué avec succès."
+                  status:
+                    type: string
+                    example: "OK"
+                  block:
+                    type: object
+                    properties:
+                      userIdToBlock:
+                        type: string
+                        description: Identifiant de l'utilisateur bloqué.
+                      _id:
+                        type: string
+                        description: Identifiant unique de l'action de blocage.
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: Date de création du blocage.
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: Date de la dernière mise à jour du blocage.
+        "400":
+          description: Requête invalide ou données manquantes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Requête invalide. Les données de blocage sont manquantes ou incorrectes."
+                  status:
+                    type: string
+                    example: "KO"
+        "404":
+          description: Utilisateur non trouvé.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Utilisateur à bloquer non trouvé."
+                  status:
+                    type: string
+                    example: "KO"
+        "500":
+          description: Erreur interne du serveur.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Erreur interne du serveur."
+                  status:
+                    type: string
+                    example: "KO"
+
+  /api/v1/client/profile/{identifiant}:
+    get:
+      summary: Obtenir le profil d'un utilisateur par ID
+      tags:
+        - Profile
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: identifiant
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Identifiant de l'utilisateur dont le profil doit être récupéré.
+      responses:
+        "200":
+          description: Profil récupéré avec succès.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Profil récupéré avec succès."
+                  status:
+                    type: string
+                    example: "OK"
+                  profile:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: Identifiant unique de l'utilisateur.
+                      name:
+                        type: string
+                        description: Nom de l'utilisateur.
+                      email:
+                        type: string
+                        description: Adresse e-mail de l'utilisateur.
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: Date de création du profil.
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: Date de la dernière mise à jour du profil.
+        "400":
+          description: Requête invalide ou données manquantes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Requête invalide."
+                  status:
+                    type: string
+                    example: "KO"
+        "404":
+          description: Profil non trouvé.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Profil non trouvé."
+                  status:
+                    type: string
+                    example: "KO"
+        "500":
           description: Erreur interne du serveur.
           content:
             application/json:
